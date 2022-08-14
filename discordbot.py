@@ -199,14 +199,14 @@ async def on_voice_state_update(member, before, after):
         if member.id == client.user.id:
             presence = f'{prefix}ヘルプ | {len(client.voice_clients)}/{len(client.guilds)}サーバー'
             await client.change_presence(activity=discord.Game(name=presence))
-           else:
-                if member.guild.voice_client.channel is after.channel:
-                    text = member.name + 'さんが入室しました'
-                    mp3url = f'https://api.su-shiki.com/v2/voicevox/audio/?text={text}&key={voicevox_key}&speaker={voicevox_speaker}&intonationScale=1'
-                    while member.guild.voice_client.is_playing():
-                        await asyncio.sleep(0.5)
-                    source = await discord.FFmpegOpusAudio.from_probe(mp3url)
-                    member.guild.voice_client.play(source)
+        else:
+            if member.guild.voice_client.channel is after.channel:
+                text = member.name + 'さんが入室しました'
+                mp3url = f'https://api.su-shiki.com/v2/voicevox/audio/?text={text}&key={voicevox_key}&speaker={voicevox_speaker}&intonationScale=1'
+                while member.guild.voice_client.is_playing():
+                    await asyncio.sleep(0.5)
+                source = await discord.FFmpegOpusAudio.from_probe(mp3url)
+                member.guild.voice_client.play(source)
     elif after.channel is None:
         if member.id == client.user.id:
             presence = f'{prefix}ヘルプ | {len(client.voice_clients)}/{len(client.guilds)}サーバー'
